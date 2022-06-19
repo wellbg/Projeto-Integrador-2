@@ -182,9 +182,10 @@ def show_get_data_api():
     if request.method == 'POST':
         nome = request.form['arquivo']
         params={'arquivo':str(nome)}
-        response = requests.get("http://192.168.15.45/ra_api",params=params)
+        response = requests.get("http://calculadorara-env.eba-6vqvdsan.us-west-2.elasticbeanstalk.com/ra_api",params=params)
         df = pd.DataFrame(response.json()['data'])
-        df=df.drop(['index'],axis=1)
+        
+        df=df.drop(['index'],axis=1)    
         tabela3 = df.to_html(classes="styled-table",index=False)
         button = '''<button type="button" onClick="window.location.href='/export_file'">Exportar</button>
             '''
