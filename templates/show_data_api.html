@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+<script>
+    // define the callAPI function that takes a first name and last name as parameters
+    var callAPI = (arquivo)=>{
+        // instantiate a headers object
+        var myHeaders = new Headers();
+        // add content type header to object
+        myHeaders.append("Content-Type", "application/json");
+        // using built in JSON utility package turn object to string and store in a variable
+        var raw = JSON.stringify({"arquivo":arquivo});
+        // create a JSON object with parameters for API call and store in a variable
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+        // make API call with parameters and use promises to get response
+        fetch("http://192.168.15.45/ra_api", requestOptions)
+        .then(response => response => response.json())
+        .then(result => alert(JSON.parse(result).body))
+        .catch(error => alert( error));
+        // .catch(error => console.log('error', error));
+    }
+</script>
+<style>
+body {
+    background-color: #d8f0f7;
+}
+
+.styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    width: 100%;
+    /* width: 716px; */
+    border-spacing: 0;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+thead, tbody, tr, th, td { display: block; }
+
+thead tr {
+    background-color: #3fc4ec;
+    width: 97%;
+    /* minus scroll bar width */
+    width: -webkit-calc(100% - 16px);
+    width:    -moz-calc(100% - 16px);
+    width:         calc(100% - 16px);
+}
+
+tr:after {  /* clearing float */
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+tbody {
+    height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+tbody td, thead th {
+    width: 12%;  /* 19% is less than (100% / 7 cols) = 20% */
+    float: left;
+}
+
+ /* .styled-table thead {
+    display: block;
+ }
+.styled-table tbody {
+    display: block;
+    height: 500px;      
+    overflow-y: auto;    
+    overflow-x: hidden;  
+}
+tbody td, thead th {
+    width: 140px;
+}
+thead th:last-child {
+    width: 156px; /* 140px + 16px scrollbar width */
+}  */
+
+
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}
+</style>
+
+
+</head>
+<body>
+<div style="width:1200px; margin:0 auto;">
+<h3></h3>
+<div class="top-heading">
+    <h1>
+        <img src="{{url_for('static', filename='logo_univesp.png')}}" width=200>
+         Calculadora de resposta relativa
+      </h1>
+    <h3>
+      Mostrar dados usando API
+    </h3>
+
+  </div>
+<div >
+    <form action="" method=post enctype=multipart/form-data>
+        <p><div class='input_area'>
+            <label>Nome :</label>
+            <input type="text" id="arquivo" name="arquivo">
+            <input type=submit value="Mostrar datos (API)">
+            <button type="button" onClick="window.location.href='/'">Voltar ao Menu Inicial</button>
+            <!-- <button type="button" onclick="callAPI(document.getElementById('arquivo').value)">Call API</button> -->
+        </div>
+        
+    <p>
+    <div class="form-group">
+    <div style="overflow-y:auto;">
+      {{ tabela3 | safe }}
+    </div>
+    <div>
+        {{button | safe}}  
+      </div>
+    
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+
+</html>

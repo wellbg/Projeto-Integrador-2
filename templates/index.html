@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Besley:wght@900&family=IBM+Plex+Sans+Thai:wght@100&display=swap">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+    <title>RA Wellington Goncalves</title>
+    <style>
+      body {
+          background-color: #d8f0f7;
+      }
+    </style>
+    <script>
+      // define the callAPI function that takes a first name and last name as parameters
+      var callAPI = (firstName,lastName)=>{
+          // instantiate a headers object
+          var myHeaders = new Headers();
+          // add content type header to object
+          myHeaders.append("Content-Type", "application/json");
+          // using built in JSON utility package turn object to string and store in a variable
+          var raw = JSON.stringify({"firstName":firstName,"lastName":lastName});
+          // create a JSON object with parameters for API call and store in a variable
+          var requestOptions = {
+              method: 'POST',
+              headers: myHeaders,
+              body: raw,
+              redirect: 'follow'
+          };
+          // make API call with parameters and use promises to get response
+          fetch("https://6kafdkewt7.execute-api.us-east-1.amazonaws.com/dev", requestOptions)
+          .then(response => response.text())
+          .then(result => alert(JSON.parse(result).body))
+          .catch(error => console.log('error', error));
+      }
+  </script>
+  </head>
+
+  <style>
+    body {
+      font-family: 'IBM Plex Sans Thai', serif;
+      font-size: 14px;
+      width:1200px; 
+      margin:0 auto;
+    }
+  </style>
+
+  <body>
+    <div class="top-heading">
+      <h1>
+        <img src="{{url_for('static', filename='logo_univesp.png')}}" width=200>
+         Calculadora de resposta relativa
+      </h1>
+    </div>
+      <div style="width:1000px;" id="container">
+        <h3>Menu
+          <ul>
+            <li><a href="upload">Carregar resposta relativa</a></li>
+            <li><a href="show_data">Mostrar/Exportar dados do banco de dados</a></li>
+            <li><a href="show_data_api">Mostrar/Exportar dados usando API</a></li>
+        </ul>
+      </h3>
+          <!-- <button type="submit" class="btn" onClick="window.location.href='/predict'">
+            Predizer e inserir no banco de dados
+          </button> -->
+        
+        
+      
+      </div>
+      
+      <p>
+        Author: Weillington Golçalves<br>
+      </p>
+
+    </div>
+  </body>
+</html>
